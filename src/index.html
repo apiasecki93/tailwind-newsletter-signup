@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  <link href="./output.css" rel="stylesheet" />
+  <title>Frontend Mentor | Newsletter sign-up form with success message</title>
+    <!-- <script defer src="./assets/fonts/Roboto-Bold.ttf"></script>
+    <script defer src="./assets/fonts/Roboto-Regular.ttf"></script> -->
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    .attribution { font-size: 11px; text-align: center; }
+    .attribution a { color: hsl(228, 45%, 44%); }
+  </style>
+
+  <script>
+    window.onload = () => {
+     
+      let email = document.getElementById("email");
+    let subButton = document.getElementById("SubButton");
+    let emailText = document.getElementById("emailText");
+    let message = document.createElement("div");
+    let disMisBtn = document.getElementById("DissMissBtn");
+
+
+    emailText.insertAdjacentElement("afterend", message);
+
+
+
+   
+    subButton.addEventListener("click", () => {
+        event.preventDefault();
+        // Regular expression to validate email format
+        let emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+        if (!emailRegex.test(email.value)) {
+            // Set the button's color to red and opacity to 80% using Tailwind CSS classes
+            // email.classList.add("bg-red-500", "opacity-20", "border-red-500", "text-red-900")
+            email.style.backgroundColor = "rgb(255, 232, 230)";
+
+            email.classList.add( "text-red-500",  "border-red-500");
+            // email.classList.add("text-red-900");
+            // Display message above the email input field
+            message.innerText = "Valid email required";
+            message.classList.add("text-red-500", "text-sm");
+
+        } else {
+            // Reset styles and message if email is valid
+            email.classList.remove("bg-red-500", "opacity-80");
+            message.innerText = "";
+            //  hide the form and display success message
+            document.getElementById("cardContainer").classList.add("hidden");
+            document.getElementById("successMessage").classList.remove("hidden");
+
+            // Get the value from the email input element
+            var emailValue = document.getElementById("email").value;
+
+            // Get the span element where you want to set the email value
+            var emailSpan = document.getElementById("emailSentTo");
+
+            // Set the email value as the content of the span element
+            emailSpan.textContent = emailValue;
+
+        }
+
+        disMisBtn.addEventListener("click",() => {
+          document.getElementById("successMessage").classList.add("hidden");
+          document.getElementById("cardContainer").classList.remove("hidden");
+        })
+
+    });
+
+
+  }
+
+
+  </script>
+  
+</head>
+<body class="flex flex-col bg-darkSlateGrey  items-center justify-center  ssm:bg-whitee">
+  <!-- <div class="attribution text-whitee">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+    Coded by <a href="#">Artur</a>.
+  </div> -->
+  <!-- success message hidded by default -->
+  <div id="successMessage" class="hidden flex-col items-center justify-center gap-1 p-1 m-8 relative  overflow-hidden">
+    <div class="flex flex-col bg-whitee m-auto w-full max-w-[411px] h-auto rounded-3xl overflow-hidden mt-[80px] ssm:items-left px-10 ssm:px-5">
+      <div class="py-10">
+          <img src="./assets/images/svg/checkBig.svg" alt="success illustration">
+      </div>
+      <div class="py-4 font-bold text-4xl text-left">Thanks for subscribing!</div>
+      <div class="py-4 font-semibold text-left  break-words  ssm:px-2 ssm:max-w-full ">
+          Confirmation email has been sent to 
+          <span id="emailSentTo" class="font-bold inline-block"></span>. 
+          Please open it and click the button inside to confirm your subscription.
+      </div>
+      <div class="py-4 w-full flex justify-left">
+          <button id="DissMissBtn" class="bg-darkSlateGrey shadow-4xl text-zinc-50 w-full max-w-[334px] mb-8 rounded-md p-3 text-center cursor-pointer hover:bg-gradient-to-r hover:from-tomato hover:to-pinkato transition-all duration-300">
+              Subscribe to monthly newsletter
+          </button>
+      </div>
+  </div>
+  </div>
+  <!-- Sign-up form start -->
+  <div id="cardContainer" class="flex  flex-row ssm:flex-col bg-whitee m-auto w-auto h-auto ssm:items-center ssm:justify-center overflow-hidden mt-[80px] ssm:mt-0">
+    
+    <div id="formContainer" class="flex flex-col ssm:order-2 items-center justify-center p-4 md:p-8 m-4 md:m-8 relative max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl">
+      <div class="text-xl md:text-2xl lg:text-3xl font-bold mb-5">Stay updated!</div>
+      <div class="font-normal text-center px-3 md:px-6 lg:px-8 mb-8">Join 60,000+ product managers receiving monthly updates on:</div>
+      <!-- Check box segment -->
+      <div class="flex flex-col justify-center font-normal gap-3 text-sm md:text-base lg:text-lg w-full mb-8">
+        <span class="flex text-sm font-semibold gap-3">
+          <img src="./assets/images/svg/checkSmall.svg" alt="success illustration">
+          Product discovery and building what matters
+        </span>
+        <span class="flex text-sm font-semibold gap-3">
+          <img src="./assets/images/svg/checkSmall.svg" alt="success illustration">
+          Measuring to ensure updates are a success
+        </span>   
+        <span class="flex text-sm font-semibold gap-3">
+          <img src="./assets/images/svg/checkSmall.svg" alt="success illustration">
+          And much more!
+        </span>
+      </div>
+      <!-- Email input segment -->
+      <form class="flex flex-col w-full">
+        <div class="flex flex-row">
+          <div id="emailText" class="flex-auto text-sm font-bold pb-2">Email address</div>
+        </div>
+        <input 
+          id="email"
+          required 
+          maxlength="64" type="email" placeholder="email@company.com"
+          class="flex rounded-lg border border-solid border-gray-300 py-2 pl-2 w-full"
+        >
+        <!-- Subscription segment -->
+        <button id="SubButton" class="bg-darkSlateGrey text-zinc-50 rounded-md p-3 mt-4 w-full text-center cursor-pointer hover:bg-gradient-to-r hover:from-tomato hover:to-pinkato transition-all duration-300 shadow-4xl">Subscribe to monthly newsletter</button>
+      </form>
+    </div>
+    <!-- main image segment -->
+    <div class="ssm:relative ssm:mt-0 ">
+    <div id="imageContainer" class="z-10 p-5 ssm:p-0 ssm:pb-6 ssm:relative ssm:order-1  ssm:w-full ssm:h-auto  top-[50px] ssm:top-[-0px] ">
+        <!-- Desktop Image -->
+        <img 
+            class="object-cover w-full h-full rounded-2xl block ssm:hidden"
+            src="./assets/images/svg/hero.svg" alt="hero" type="image/svg+xml"
+        >
+        <!-- Mobile Image -->
+        <!-- ssm:h-auto ssm:inset-x-0 ssm:top-0 ssm:w-full ssm:scale-150 ssm:h-screen-->
+        <img 
+          class="hidden ssm:block ssm:w-screen  ssm:mt-0 ssm:mx-0"
+            src="./assets/images/svg/heroMobile.svg" alt="hero mobile" type="image/svg+xml"
+        >
+    </div>
+</div>
+    
+  </div>
+
+  
+  <div ></div>
+  </div>
+</body>
+</html>
